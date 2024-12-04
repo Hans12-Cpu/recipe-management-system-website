@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Management System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Recipe Manager</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#addRecipeModal">Add Recipe</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Recipe List Section -->
+  <div class="container my-5">
+    <h2 class="text-center mb-4">All Recipes</h2>
+
+    <div class="row" id="recipe-list">
+      <!-- Sample Recipe Card -->
+      <div class="col-md-4">
+        <div class="card">
+          <img src="https://via.placeholder.com/200" class="card-img-top" alt="Recipe image">
+          <div class="card-body">
+            <h5 class="card-title">Recipe Name</h5>
+            <p class="card-text">A brief description of the recipe goes here. It should be short and sweet.</p>
+            <a href="#" class="btn btn-primary">View Recipe</a>
+          </div>
+        </div>
+      </div>
+      <!-- Add more cards dynamically -->
+    </div>
+  </div>
+
+  <!-- Add Recipe Modal -->
+  <div class="modal fade" id="addRecipeModal" tabindex="-1" aria-labelledby="addRecipeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addRecipeModalLabel">Add a New Recipe</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="recipe-form">
+            <div class="mb-3">
+              <label for="recipe-name" class="form-label">Recipe Name</label>
+              <input type="text" class="form-control" id="recipe-name" required>
+            </div>
+            <div class="mb-3">
+              <label for="recipe-description" class="form-label">Description</label>
+              <textarea class="form-control" id="recipe-description" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="recipe-image" class="form-label">Image URL</label>
+              <input type="url" class="form-control" id="recipe-image" required>
+            </div>
+            <div class="mb-3">
+              <label for="recipe-ingredients" class="form-label">Ingredients</label>
+              <textarea class="form-control" id="recipe-ingredients" rows="4" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="recipe-instructions" class="form-label">Instructions</label>
+              <textarea class="form-control" id="recipe-instructions" rows="4" required></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="save-recipe">Save Recipe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-light text-center py-3">
+    <p>&copy; 2024 Recipe Manager. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Save new recipe and display it on the list
+    document.getElementById('save-recipe').addEventListener('click', function() {
+      const name = document.getElementById('recipe-name').value;
+      const description = document.getElementById('recipe-description').value;
+      const image = document.getElementById('recipe-image').value;
+      const ingredients = document.getElementById('recipe-ingredients').value;
+      const instructions = document.getElementById('recipe-instructions').value;
+
+      if (name && description && image && ingredients && instructions) {
+        const recipeCard = `
+          <div class="col-md-4">
+            <div class="card">
+              <img src="${image}" class="card-img-top" alt="Recipe image">
+              <div class="card-body">
+                <h5 class="card-title">${name}</h5>
+                <p class="card-text">${description}</p>
+                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewRecipeModal" onclick="viewRecipe('${name}', '${description}', '${ingredients}', '${instructions}')">View Recipe</a>
+              </div>
+            </div>
+          </div>
+        `;
+        document.getElementById('recipe-list').insertAdjacentHTML('beforeend', recipeCard);
+        document.getElementById('recipe-form').reset();
+        document.querySelector('[data-bs-dismiss="modal"]').click();
+      }
+    });
+
+    // View Recipe Modal
+    function viewRecipe(name, description, ingredients, instructions) {
+      // Show recipe details in modal (this could be further expanded)
+      alert('Recipe: ' + name + '\n\nDescription: ' + description + '\n\nIngredients: ' + ingredients + '\n\nInstructions: ' + instructions);
+    }
+  </script>
+</body>
+</html>
